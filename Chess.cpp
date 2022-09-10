@@ -27,6 +27,56 @@ void initializeBoard(vector<vector<string>> &Board){
 }
 
 
+vector<int> findPiece(vector<vector<string>> &Board, char piece, char P){
+    for (int i = 0; i < 5; i++)
+    for (int j = 0; j < 5; j++)
+      if (Board[i][j][0] == P and Board[i][j][3] == piece)
+        return {i, j};
+
+    return {-1, -1};
+}
+
+bool inBounds(int x, int y){
+    return (x < 5 and y < 5 and x >= 0 and y >= 0);
+}
+
+bool checkValidity(vector<vector<string>> &Board, char piece, char direction,
+                    char P, int &nextX, int &nextY, int &i, int &j){
+
+    vector<int> pos = findPiece(Board, piece, P);
+    i = pos[0], j = pos[1];
+
+    // Piece not present
+    if(i==-1 or j==-1){
+        cout<<"Piece not present in the board : "<<endl;
+        return false;
+    }
+
+    nextX = i, nextY = j;
+
+    if(P == 'B'){
+        if(direction == 'R') direction = 'L';
+        else if(direction == 'L') direction = 'R';
+        else if(direction == 'F') direction = 'B';
+        else if(direction == 'B') direction = 'F';
+     }
+
+    switch(direction){
+        case 'R' : nextY++;
+                    break;
+        case 'L' : nextY--;
+                    break;
+        case 'F' : nextX--;
+                    break;
+        case 'B' : nextX++;
+                    break;
+        default : cout<<"Please input valid direction "<<endl;
+                  return false;
+    }
+
+    return inBounds(nextX, nextY);
+
+}
 
 
 
