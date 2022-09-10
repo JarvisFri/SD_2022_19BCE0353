@@ -29,6 +29,53 @@ void initializeBoard(vector<vector<string>> &Board){
 
 
 
+
+
+
+
+
+
+void makeMove(vector<vector<string>> &Board, char P, int &cA, int &cB){
+
+    bool flag = true;
+    int nextX=0, nextY=0;
+    int i, j;
+    char piece, direction;
+
+    while(flag){
+        // take input of piece and direction
+        cout<<"Enter piece name and move name : ";
+        string temp = "";
+        cin>>temp;
+
+        piece = temp[1];
+        direction = temp[3];
+
+        // check validity of move
+        bool isValid = checkValidity(Board, piece, direction, P, nextX, nextY, i, j);
+        if(!isValid){
+            cout<<"Please make a valid move : "<<endl;
+        }else flag = false;
+    }
+
+
+    // make move
+    Board[i][j] = "-";
+    if(Board[i][j] != "-"){
+        P == 'A' ? cB-- : cA--;
+    }
+    cout<<"\n"<<nextX<<" "<<nextY<<"\n";
+
+    string newValue = "";
+    newValue += P;
+    newValue += "-P";
+    newValue += piece;
+
+    Board[nextX][nextY] = newValue;
+    cout<<Board[nextX][nextY]<<"\n\n";
+    return;
+}
+
 void displayBoard(vector<vector<string>> &Board){
     for (int i = 0; i < 5; i++){
         for (int j = 0; j < 5; j++){
